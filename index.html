@@ -1,0 +1,355 @@
+<!DOCTYPE HTML>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+	<title>2k Loader</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<style>
+	  /* Color Variables */
+.hidden {
+  display: none;
+}
+
+.center {
+  display: block;
+  margin: 0 auto;
+}
+
+.close-modal {
+  text-align: right;
+  padding: 5px;
+  display: block;
+  cursor: pointer;
+}
+
+.modal {
+  opacity: 0.9;
+  background: #000;
+}
+
+.text-pink {
+  color: #3F51B5;
+}
+
+.text-brown {
+  color: #C5CAE9;
+}
+
+/* Flex Grid - Mixins */
+/* Styles */
+html, body {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  background: #f1f1f1;
+}
+
+#app-container {
+  width: 420px;
+  display: block;
+  position: relative;
+  margin: 10px auto;
+  background: #fff;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.selected {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #e6e6e6;
+  position: absolute;
+  bottom: -6px;
+  left: 45%;
+}
+
+.notify-bubble:after {
+  background-color: #bec5e8;
+  color: #fff;
+  font-weight: 700;
+  font-size: 9px;
+  border-radius: 50%;
+  position: absolute;
+  line-height: 12px;
+  width: 12px;
+  height: 12px;
+  text-align: center;
+  top: -5px;
+  right: -4px;
+  content: "3";
+}
+
+header {
+  background-color: #3F51B5;
+  color: #fff;
+  padding: 15px;
+  box-shadow: 0 2px 2px -2px #444;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: flex;
+  display: -ms-flexbox;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  @inlude justify-content(center);
+}
+
+.heading-user {
+  width: 70%;
+}
+
+.icons {
+  width: 22%;
+  float: right;
+}
+.icons i {
+  border: #3849a2 1px solid;
+  border-radius: 4px;
+  padding: 5px;
+  background: #5465c4;
+}
+
+.main-contact {
+  display: inline-block;
+  float: left;
+  margin-right: 10px;
+  width: 10%;
+}
+.main-contact img {
+  width: 35px;
+  border-radius: 50%;
+  border: #fff 2px solid;
+}
+
+nav {
+  color: #3F51B5;
+}
+nav ul {
+  margin: 0;
+  padding: 0;
+}
+nav li {
+  list-style-type: none;
+  position: relative;
+  display: inline-block;
+  padding: 15px 0px;
+  margin: 0;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 700;
+  width: 25%;
+  float: left;
+  background: #e6e6e6;
+}
+nav li:hover {
+  background: #d9d9d9;
+  cursor: pointer;
+}
+nav li:hover .selected {
+  border-top-color: #d9d9d9;
+}
+nav li:first-child {
+  border-left: 0;
+}
+
+.panel, .contact-list li {
+  border-bottom: 1px solid #f1f1f1;
+  padding: 15px 10px 0;
+}
+
+.form-search {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.form-add {
+    background-color: rgba(255, 255, 255, 0.9);
+    display: block;
+    width: 265px;
+    position: fixed;
+    padding: 10px;
+    border: 2px solid #C5CAE9;
+    bottom: 20%;
+}
+.form-add img {
+  max-width: 35%;
+}
+.form-add label {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 10px 0;
+  display: block;
+}
+.form-add input {
+  width: 98%;
+  border-radius: 8px;
+  border: 1px solid #C5CAE9;
+  padding: 10px 0 10px 5px;
+  position: relative;
+}
+.form-add .btn-primary {
+  padding: 10px 10px;
+  margin: 5px 0;
+  float: right;
+}
+
+.form-input {
+  border-radius: 25px;
+  border: 1px solid #f1f1f1;
+  height: 35px;
+  padding: 5px;
+  padding-left: 35px;
+  display: block;
+  width: 89%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 11px;
+  color: #cec9c3;
+}
+
+.refresh-icon {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  color: #cec9c3;
+}
+.refresh-icon:hover {
+  cursor: pointer;
+}
+
+.contact-list {
+  margin: 0;
+  padding: 0;
+}
+.contact-list li {
+  display: -moz-box;
+  display: -webkit-flex;
+  display: flex;
+  display: -ms-flexbox;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #919191;
+  padding: 10px;
+}
+.contact-list li:nth-child(even) {
+  background: #f7f7f7;
+}
+.contact-list img {
+  border-radius: 50%;
+  float: left;
+  margin-left: 10px;
+  width: 10%;
+  height: 45px;
+  margin-right: 10px;
+}
+.contact-list .heading--name {
+  color: #444;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.contact-list .contact-info {
+  width: 80%;
+}
+.contact-list .contact-item {
+  display: inline-block;
+  font-size: 0.7em;
+}
+.contact-list .contact-item .fa {
+  font-size: 1.3em;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+.btn-add {
+  height: 40px;
+  font-weight: 700;
+  font-size: 18px;
+  background: #3F51B5;
+  color: #fff;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+}
+.btn-add .fa {
+  font-size: 14px;
+}
+
+	</style>
+</head>
+<body>
+  <div id="app-container" ng-app="contactsApp" ng-controller="athletesController as athletesList" ng-class="{ 'modal' : formShow }">
+		<header>
+				<div class="main-contact">
+						<img src="http://joinem-staging-media-public.s3.amazonaws.com/thumbnails/avatars/0akcfz1e949at1nxxo7k72b6.jpeg.50x50_q85_crop.jpg">
+				</div>
+				<div class="heading-user">
+						<strong>Cindy Juarez <i class="fa fa-caret-down"></i></strong>
+						<br/>
+						<small>@sceendy</small>
+				</div>
+				<div class="icons">
+						<i class="fa fa-comments"></i>
+						<i class="fa fa-globe notify-bubble"></i>
+						<i class="fa fa-cog"></i>
+				</div>
+		</header>
+		<nav>
+				<ul>
+						<li>All</li>
+						<li>Athletes (0)<span class="selected"></span></li>
+						<li>Fans</li>
+						<li>Teams</li>
+				</ul>
+		</nav>
+		<div style="clear:both"></div>
+		<div class="panel">
+				<form class="form-search">
+						<i class="material-icons search-icon">search</i>
+						<input class="form-input" placeholder="Search for friends ny name..." ng-model="athlete.name"/>
+						<i class="material-icons refresh-icon" ng-click="clear()">refresh</i>
+				</form>
+		</div>
+		<ul class="contact-list">
+				<li ng-repeat="athlete in athletesList.athletes | filter: athlete.name">
+						<img ng-src="{{ athlete.image }}">
+						<div class="contact-info">
+								<h3 class="heading--name">{{ athlete.name }}</h3>
+								<div class="contact-item"><i class="fa fa-map-marker"></i> {{ athlete.hometown }}</div>
+								<div class="contact-item"><i class="fa fa-briefcase"></i> {{ athlete.position }}</div>
+						</div>
+					<i class="fa fa-pencil fa-2x text-pink" ng-click="edit()"></i>
+				</li>
+		</ul>
+
+		<form name="addAthlete" ng-submit="athletesList.addAthlete()" ng-if="formShow" class="form-add" style="display: none;">
+				<div ng-click="close()"><i class="fa fa-times close-modal"></i></div>
+				<img src="http://dallasposttrib.com/wordpress/wp-content/uploads/2015/01/Dallas-Mavericks-Logo.gif" class="center" />
+				<label>Athlete Name:</label>
+				<input type="text" ng-model="athletesList.athleteName" size="30" placeholder="add new athlete here" required/>
+				<br/>
+				<label>Athletes Hometown:</label>
+				<input type="text" ng-model="athletesList.athleteHometown" size="30" placeholder="add athlete hometown" required/>
+				<label>Athletes Position:</label>
+				<input type="text" ng-model="athletesList.athletePosition" size="30" placeholder="add athlete hometown" required/>
+				<button ng-disabled="addAthlete.$invalid && addAthlete.$pristine" class="btn-primary" type="submit">Add New Athlete</button>
+		</form>
+	  <custom-checkbox ng-model="formShow" text="Add a new Athlete" name="input-formShow"></custom-checkbox>
+</div>
+</body>
